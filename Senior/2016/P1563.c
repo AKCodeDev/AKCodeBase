@@ -1,4 +1,4 @@
-// The answer to J2016P3 
+// The answer to S2016P1
 // Copyright (C) 2019 dumaosen
 
 // This program is free software: you can redistribute it and/or modify
@@ -16,42 +16,40 @@
 
 #include <stdio.h>
 
-int data[300001], country[300001], ht[200002], count;
-struct ship
+int point;
+struct toy
 {
-	int ti, ki;
-}allships[100001];
+	int posit;
+	char name[11];
+}alltoys[100001];
+struct command
+{
+	int posit, point;
+}allcommands[100001];
 
 int main()
 {
-	int n = 0, i, j, k, m = 0, p = 0;
-	scanf("%d", &n);
+	int n, m, i;
+	scanf("%d%d", &n, &m);
 	
 	for(i = 0; i < n; i ++)
+		scanf("%d%s", &alltoys[i].posit, &alltoys[i].name);
+	
+	for(i = 0; i < m; i ++)
+		scanf("%d%d", &allcommands[i].posit, &allcommands[i].point);
+	
+	for(i = 0; i < m; i ++)
 	{
-		scanf("%d%d", &allships[i].ti, &allships[i].ki);
-		ht[i * 2] = m;
-		for(j = 0; j < allships[i].ki; j ++)
-		{
-			scanf("%d", &data[m]);
-			country[data[m]] ++;
-			if(country[data[m]] == 1)
-				count ++;
-			m ++;
-		}
-		
-		ht[i * 2 + 1] = m - 1;
-		while(allships[i].ti - allships[p].ti >= 86400)
-		{
-			for(k = ht[p * 2] ; k <= ht[p * 2 + 1]; k ++)
-			{
-				country[data[k]] --;
-				if(country[data[k]] == 0)
-					count --;
-			}
-			p ++;
-		}
-		printf("%d\n", count);
+		if(alltoys[point].posit == allcommands[i].posit)
+			point = point - allcommands[i].point;
+		else	
+			point = point + allcommands[i].point;
+		if(point < 0)
+			point = point + n;
+		if(point >= n)
+			point = point - n;
 	}
+	
+	printf("%s", alltoys[point].name);
 	return 0;
 }
